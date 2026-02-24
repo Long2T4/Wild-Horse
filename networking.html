@@ -50,12 +50,14 @@
 
           <div class="placeholder-box">[PASTE NSLOOKUP OR DIG OUTPUT HERE]
 
-Example command to run:
-$ nslookup wild-horses.vercel.app
-or
-$ dig wild-horses.vercel.app
+PS C:\Users\Longt> nslookup https://wild-horse.vercel.app
+Server:  dns9.quad9.net
+Address:  9.9.9.9
 
-Paste the output showing the resolved IP address(es).</div>
+Non-authoritative answer:
+Name:    https://wild-horse.vercel.app
+Addresses:  64.29.17.3
+          216.198.79.3.</div>
         </div>
       </div>
 
@@ -72,8 +74,10 @@ Paste the output showing the resolved IP address(es).</div>
 
           <div class="placeholder-box">[PASTE ACTUAL IP ADDRESSES HERE]
 
-IPv4 Address: xxx.xxx.xxx.xxx
-IPv6 Address: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx
+IPv4 Addresses: 64.29.17.3, 216.198.79.3
+
+Our domain resolves to IPv4 addresses. Vercel uses multiple 
+IP addresses for load balancing and reliability.
 
 Note which protocol(s) your domain resolves to.</div>
         </div>
@@ -94,16 +98,27 @@ Note which protocol(s) your domain resolves to.</div>
 
           <div class="placeholder-box">[PASTE DEVTOOLS NETWORK SCREENSHOT NOTES HERE]
 
-Request Headers (example):
-- Method: GET
-- URL: https://wild-horses.vercel.app/
-- Status: 200 OK
+Request Details:
+- Request URL: https://wild-horse.vercel.app/index.html
+- Request Method: GET
+- Status Code: 304 Not Modified (page cached, no changes)
+- Remote Address: 216.198.79.67:443
+- Referrer Policy: strict-origin-when-cross-origin
 
-Response Headers to note:
-- Content-Type: text/html
-- Server: Vercel (or GitHub.com)
-- Cache-Control: ...
-- Any security headers
+Port 443 confirms HTTPS connection (HTTP uses port 80).
+
+Status Codes Explained:
+- 200 OK = Page loaded fresh from server
+- 304 Not Modified = Page unchanged, loaded from browser cache
+- Both indicate successful requests
+
+Request Headers (key ones):
+- :scheme: https (encrypted connection)
+- accept: text/html (requesting HTML document)
+- accept-encoding: gzip, deflate, br (compression supported)
+
+HTTPS ensures all data between your browser and Vercel's 
+server is encrypted and secure.
 
 Open DevTools (F12) → Network tab → Refresh page → Click on the main document request to see these headers.</div>
         </div>
@@ -126,15 +141,28 @@ Open DevTools (F12) → Network tab → Refresh page → Click on the main docum
 
           <div class="placeholder-box">[PASTE SECURITY EVIDENCE HERE]
 
-Evidence to include:
-1. Screenshot showing HTTPS padlock and certificate info
-2. HSTS header if present: Strict-Transport-Security: max-age=...
-3. Other security headers from response
-4. Redirect from HTTP to HTTPS (try visiting http:// version)
+Security Report (from securityheaders.com):
+- Site: https://wild-horse.vercel.app/
+- IP Address: 216.198.79.67
+- Grade: D
 
-You can also use tools like:
-- https://securityheaders.com
-- https://www.ssllabs.com/ssltest/
+Security Headers Present:
+✓ Strict-Transport-Security (HSTS)
+  - Forces browsers to only use HTTPS
+  - Protects against downgrade attacks
+
+Security Headers Missing (common for static sites):
+✗ Content-Security-Policy
+✗ X-Frame-Options  
+✗ X-Content-Type-Options
+✗ Referrer-Policy
+✗ Permissions-Policy
+
+Note: The "D" grade is normal for basic static sites hosted 
+on Vercel. The most important security feature (HTTPS/HSTS) 
+is present, ensuring all traffic is encrypted. The missing 
+headers are optional security enhancements typically configured 
+for more complex web applications.
 
 Paste relevant findings here.</div>
         </div>
