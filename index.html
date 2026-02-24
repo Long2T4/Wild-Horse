@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wild Horses - Competitive TFT Gaming Squad">
+  <title>Wild Horses | Home</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body data-page="home">
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🐎</span>
+        <span>Wild Horses</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="tft.html">TFT Leaderboard</a></li>
+        <li><a href="networking.html">Networking Concepts</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="assets/group.jpg" alt="Wild Horses group photo">
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title">Wild Horses</h1>
+      <p class="hero-tagline">Competitive TFT Squad</p>
+      <div class="hero-actions">
+        <a href="games.html" class="btn btn-primary">View Games</a>
+        <a href="tft.html" class="btn btn-secondary">TFT Leaderboard</a>
+        <a href="networking.html" class="btn btn-secondary">Networking Concepts</a>
+      </div>
+    </div>
+  </section>
+
+<!-- Photo Gallery -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Our Moments</h2>
+        <p class="section-subtitle">Wild Horses through the years</p>
+      </div>
+      <div class="photo-gallery">
+        <div class="gallery-item gallery-item-large">
+          <img src="assets/gallery/photo1.jpg" alt="Group photo 1">
+          <div class="gallery-caption">Caption 1</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/gallery/photo2.jpg" alt="Group photo 2">
+          <div class="gallery-caption">Caption 2</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/gallery/photo3.jpg" alt="Group photo 3">
+          <div class="gallery-caption">Caption 3</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/gallery/photo4.jpg" alt="Group photo 4">
+          <div class="gallery-caption">Caption 4</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/gallery/photo5.jpg" alt="Group photo 5">
+          <div class="gallery-caption">Caption 5</div>
+        </div>
+        <div class="gallery-item">
+          <img src="assets/gallery/photo6.jpg" alt="Group photo 6">
+          <div class="gallery-caption">Caption 6</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">🐎 Wild Horses</div>
+        <div class="footer-links">
+          <a href="#" target="_blank">GitHub Repo</a>
+          <a href="#" target="_blank">Live Site</a>
+        </div>
+      </div>
+      <p class="footer-copy">© 2024 Wild Horses Gaming Squad. Computer Networking Project. by Long Truong</p>
+    </div>
+  </footer>
+
+  <!-- Image Modal -->
+  <div class="modal" id="image-modal">
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <button class="modal-close" id="modal-close" aria-label="Close modal">×</button>
+        <img id="modal-image" src="" alt="">
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/data.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

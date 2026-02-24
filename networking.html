@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wild Horses - Networking Concepts Explained">
+  <title>Networking Concepts | Wild Horses</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body data-page="networking">
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🐎</span>
+        <span>Wild Horses</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="tft.html">TFT Leaderboard</a></li>
+        <li><a href="networking.html" class="active">Networking Concepts</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h1 class="section-title">Networking Concepts</h1>
+        <p class="section-subtitle">How networking makes our website work</p>
+      </div>
+
+      <div class="networking-intro">
+        <p>This page explains the networking concepts that allow you to access the Wild Horses website from anywhere in the world. Each section connects a networking concept directly to our deployment.</p>
+      </div>
+
+      <!-- DNS Section -->
+      <div class="concept-section expanded">
+        <div class="concept-header" tabindex="0" role="button" aria-expanded="true">
+          <h3><span class="concept-icon">🌐</span> DNS (Domain Name System)</h3>
+          <span class="concept-toggle">▼</span>
+        </div>
+        <div class="concept-content">
+          <p>When you type our website address into your browser, DNS translates that human-readable domain name into an IP address that computers can understand. Our domain (e.g., <strong>wild-horses.vercel.app</strong> or <strong>username.github.io</strong>) gets resolved to a specific IP address through a series of DNS lookups.</p>
+          
+          <p>The DNS resolution process involves querying root servers, TLD servers, and authoritative name servers until the IP address is found. This typically happens in milliseconds and is cached at various levels to speed up future requests.</p>
+
+          <div class="placeholder-box">[PASTE NSLOOKUP OR DIG OUTPUT HERE]
+
+Example command to run:
+$ nslookup wild-horses.vercel.app
+or
+$ dig wild-horses.vercel.app
+
+Paste the output showing the resolved IP address(es).</div>
+        </div>
+      </div>
+
+      <!-- IP Addressing Section -->
+      <div class="concept-section expanded">
+        <div class="concept-header" tabindex="0" role="button" aria-expanded="true">
+          <h3><span class="concept-icon">📍</span> IP Addressing</h3>
+          <span class="concept-toggle">▼</span>
+        </div>
+        <div class="concept-content">
+          <p><strong>IPv4</strong> uses 32-bit addresses (e.g., 192.168.1.1), allowing for about 4.3 billion unique addresses. Due to address exhaustion, <strong>IPv6</strong> was developed with 128-bit addresses (e.g., 2001:0db8:85a3:0000:0000:8a2e:0370:7334), providing virtually unlimited addresses.</p>
+          
+          <p>Our website is hosted on servers with specific IP addresses. Modern hosting platforms like Vercel and GitHub Pages typically support both IPv4 and IPv6, allowing users on either protocol to access our site.</p>
+
+          <div class="placeholder-box">[PASTE ACTUAL IP ADDRESSES HERE]
+
+IPv4 Address: xxx.xxx.xxx.xxx
+IPv6 Address: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx
+
+Note which protocol(s) your domain resolves to.</div>
+        </div>
+      </div>
+
+      <!-- Protocols Section -->
+      <div class="concept-section expanded">
+        <div class="concept-header" tabindex="0" role="button" aria-expanded="true">
+          <h3><span class="concept-icon">🔒</span> Protocols (HTTP vs HTTPS)</h3>
+          <span class="concept-toggle">▼</span>
+        </div>
+        <div class="concept-content">
+          <p><strong>HTTP</strong> (Hypertext Transfer Protocol) is the foundation of data communication on the web. <strong>HTTPS</strong> adds TLS/SSL encryption, ensuring data is encrypted between your browser and our server.</p>
+          
+          <p>When you visit our site, your browser sends an HTTP request and receives a response. A successful page load returns status code <strong>200 OK</strong>. Other common codes include 301 (redirect), 404 (not found), and 500 (server error).</p>
+
+          <p>Our site is served over HTTPS, which you can verify by the padlock icon in your browser's address bar. This protects any data transmitted and verifies you're connected to the legitimate server.</p>
+
+          <div class="placeholder-box">[PASTE DEVTOOLS NETWORK SCREENSHOT NOTES HERE]
+
+Request Headers (example):
+- Method: GET
+- URL: https://wild-horses.vercel.app/
+- Status: 200 OK
+
+Response Headers to note:
+- Content-Type: text/html
+- Server: Vercel (or GitHub.com)
+- Cache-Control: ...
+- Any security headers
+
+Open DevTools (F12) → Network tab → Refresh page → Click on the main document request to see these headers.</div>
+        </div>
+      </div>
+
+      <!-- Security Section -->
+      <div class="concept-section expanded">
+        <div class="concept-header" tabindex="0" role="button" aria-expanded="true">
+          <h3><span class="concept-icon">🛡️</span> Security Feature Evidence</h3>
+          <span class="concept-toggle">▼</span>
+        </div>
+        <div class="concept-content">
+          <p>Modern web hosting platforms implement several security features automatically:</p>
+          
+          <p><strong>HTTPS Enforcement:</strong> HTTP requests are automatically redirected to HTTPS, ensuring all traffic is encrypted. This is typically done via a 301 redirect.</p>
+          
+          <p><strong>Security Headers:</strong> Headers like <code>Strict-Transport-Security</code> (HSTS), <code>X-Content-Type-Options</code>, <code>X-Frame-Options</code>, and <code>Content-Security-Policy</code> protect against various attacks like man-in-the-middle, clickjacking, and XSS.</p>
+          
+          <p><strong>TLS Certificate:</strong> Both Vercel and GitHub Pages provide free SSL/TLS certificates, enabling HTTPS without any configuration.</p>
+
+          <div class="placeholder-box">[PASTE SECURITY EVIDENCE HERE]
+
+Evidence to include:
+1. Screenshot showing HTTPS padlock and certificate info
+2. HSTS header if present: Strict-Transport-Security: max-age=...
+3. Other security headers from response
+4. Redirect from HTTP to HTTPS (try visiting http:// version)
+
+You can also use tools like:
+- https://securityheaders.com
+- https://www.ssllabs.com/ssltest/
+
+Paste relevant findings here.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">🐎 Wild Horses</div>
+        <div class="footer-links">
+          <a href="#" target="_blank">GitHub Repo</a>
+          <a href="#" target="_blank">Live Site</a>
+        </div>
+      </div>
+      <p class="footer-copy">© 2024 Wild Horses Gaming Squad. Computer Networking Project.</p>
+    </div>
+  </footer>
+
+  <script src="scripts/data.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

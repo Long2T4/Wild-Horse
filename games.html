@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wild Horses - Games We Play">
+  <title>Games | Wild Horses</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body data-page="games">
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🐎</span>
+        <span>Wild Horses</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html" class="active">Games</a></li>
+        <li><a href="tft.html">TFT Leaderboard</a></li>
+        <li><a href="networking.html">Networking Concepts</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h1 class="section-title">Games We Play</h1>
+        <p class="section-subtitle">Click a game to view the leaderboard</p>
+      </div>
+
+      <div class="games-grid">
+        <!-- TFT Card -->
+        <a href="tft.html" class="game-card">
+          <div class="game-image">🎮</div>
+          <div class="game-info">
+            <h2 class="game-title">Teamfight Tactics</h2>
+            <p class="game-desc">Auto-battler strategy game by Riot Games. Compete on the ranked ladder and climb to the top!</p>
+          </div>
+        </a>
+
+        <!-- Placeholder for future games -->
+        <div class="game-card" style="opacity: 0.5; cursor: default;">
+          <div class="game-image">🎯</div>
+          <div class="game-info">
+            <h2 class="game-title">Coming Soon</h2>
+            <p class="game-desc">More games will be added as our squad expands to new titles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">🐎 Wild Horses</div>
+        <div class="footer-links">
+          <a href="#" target="_blank">GitHub Repo</a>
+          <a href="#" target="_blank">Live Site</a>
+        </div>
+      </div>
+      <p class="footer-copy">© 2024 Wild Horses Gaming Squad. Computer Networking Project. by Long Truong</p>
+    </div>
+  </footer>
+
+  <script src="scripts/data.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wild Horses - Member Profile">
+  <title>Member Profile | Wild Horses</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body data-page="member">
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🐎</span>
+        <span>Wild Horses</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="tft.html">TFT Leaderboard</a></li>
+        <li><a href="networking.html">Networking Concepts</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <section class="section">
+    <div class="container profile-container">
+      
+      <!-- Profile Content (shown when member found) -->
+      <div id="member-profile" class="hidden">
+        <div class="profile-header">
+          <div class="profile-avatar" id="profile-avatar">YN</div>
+          <div class="profile-info">
+            <h1 class="profile-name" id="profile-name">Loading...</h1>
+            <p class="profile-rank" id="profile-rank">—</p>
+          </div>
+        </div>
+
+        <div class="stats-section">
+          <h3>TFT Stats Screenshot</h3>
+          <div class="stats-screenshot" tabindex="0" role="button" aria-label="Click to view full size">
+            <img id="stats-image" src="assets/stats/default.png" alt="Stats Screenshot">
+            <p class="stats-hint">Click to expand</p>
+          </div>
+          <p id="stats-note" class="stats-note hidden">Stats image not uploaded yet.</p>
+        </div>
+
+        <div class="profile-actions">
+          <a href="tft.html" class="btn btn-primary">← Back to TFT</a>
+          <a href="index.html" class="btn btn-secondary">Back to Home</a>
+        </div>
+      </div>
+
+      <!-- Not Found (shown when member not found) -->
+      <div id="member-not-found" class="not-found hidden">
+        <h2>Member Not Found</h2>
+        <p>We couldn't find a member with that name. They might have changed their summoner name or left the squad.</p>
+        <div class="profile-actions" style="justify-content: center;">
+          <a href="tft.html" class="btn btn-primary">View Leaderboard</a>
+          <a href="index.html" class="btn btn-secondary">Back to Home</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">🐎 Wild Horses</div>
+        <div class="footer-links">
+          <a href="#" target="_blank">GitHub Repo</a>
+          <a href="#" target="_blank">Live Site</a>
+        </div>
+      </div>
+      <p class="footer-copy">© 2024 Wild Horses Gaming Squad. Computer Networking Project. by Long Truong</p>
+    </div>
+  </footer>
+
+  <!-- Image Modal -->
+  <div class="modal" id="image-modal">
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <button class="modal-close" id="modal-close" aria-label="Close modal">×</button>
+        <img id="modal-image" src="" alt="">
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/data.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>
