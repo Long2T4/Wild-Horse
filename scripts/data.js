@@ -43,7 +43,7 @@ const MEMBERS = [
   { name: 'Su', tier: 'Master', division: null, lp: 124 },
   { name: 'Xệ', tier: 'Master', division: null, lp: 0 },
   { name: 'Hycan', tier: 'Master', division: null, lp: 0 },
-  { name: 'a Tứn', tier: 'Master', division: null, lp: 0 },
+  { name: 'a Tứn', tier: 'Master', division: null, lp: 219 },
   { name: 'Kua', tier: 'Master', division: null, lp: 0 },
   { name: 'Cupid', tier: 'Diamond', division: 'III', lp: 16 },
   { name: 'bánh mỳ', tier: 'Diamond', division: 'IV', lp: 10 },
