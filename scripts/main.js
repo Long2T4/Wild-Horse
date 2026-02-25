@@ -226,7 +226,11 @@ function initNetworkingPage() {
 // LOL LEADERBOARD PAGE
 // ============================================
 function initLoLPage() {
-  const { LOL_MEMBERS, sortLoLByRank, getInitials, formatLoLRank, getTierClass, getTopLoLMembers } = window.WildHorses;
+  const { LOL_MEMBERS, sortLoLByRank, getInitials, formatLoLRank, getTierClass, getTopLoLMembers, TIER_ORDER, DIVISION_ORDER, NO_DIVISION_TIERS } = window.WildHorses;
+  
+  // Current sort state
+  let currentSort = 'solo';
+  let sortDirection = 'desc'; // desc = highest first
   
   // Render Top 5
   const top5Container = document.getElementById('top5-lol-list');
@@ -258,22 +262,81 @@ function initLoLPage() {
     `).join('');
   }
   
+  // Sort function
+  function sortMembers(members, sortBy, direction) {
+    return [...members].sort((a, b) => {
+      let tierA, tierB, divA, divB, lpA, lpB;
+      
+      if (sortBy === 'solo') {
+        tierA = TIER_ORDER.indexOf(a.soloTier);
+        tierB = TIER_ORDER.indexOf(b.soloTier);
+        divA = a.soloDivision ? DIVISION_ORDER.indexOf(a.soloDivision) : 0;
+        divB = b.soloDivision ? DIVISION_ORDER.indexOf(b.soloDivision) : 0;
+        lpA = a.soloLp;
+        lpB = b.soloLp;
+      } else {
+        tierA = TIER_ORDER.indexOf(a.flexTier);
+        tierB = TIER_ORDER.indexOf(b.flexTier);
+        divA = a.flexDivision ? DIVISION_ORDER.indexOf(a.flexDivision) : 0;
+        divB = b.flexDivision ? DIVISION_ORDER.indexOf(b.flexDivision) : 0;
+        lpA = a.flexLp;
+        lpB = b.flexLp;
+      }
+      
+      // Compare tier first
+      if (tierA !== tierB) {
+        return direction === 'desc' ? tierA - tierB : tierB - tierA;
+      }
+      
+      // Then division (only for tiers that have divisions)
+      const tierName = sortBy === 'solo' ? a.soloTier : a.flexTier;
+      if (!NO_DIVISION_TIERS.includes(tierName)) {
+        if (divA !== divB) {
+          return direction === 'desc' ? divA - divB : divB - divA;
+        }
+      }
+      
+      // Then LP
+      if (lpA !== lpB) {
+        return direction === 'desc' ? lpB - lpA : lpA - lpB;
+      }
+      
+      // Finally alphabetical
+      return a.name.localeCompare(b.name);
+    });
+  }
+  
   // Render Leaderboard Table
   const tableBody = document.getElementById('lol-leaderboard-body');
   const searchInput = document.getElementById('search-input');
+  const sortSoloBtn = document.getElementById('sort-solo');
+  const sortFlexBtn = document.getElementById('sort-flex');
+  
+  function updateSortButtons() {
+    sortSoloBtn.classList.remove('active', 'asc', 'desc');
+    sortFlexBtn.classList.remove('active', 'asc', 'desc');
+    sortSoloBtn.querySelector('.sort-arrow').textContent = '';
+    sortFlexBtn.querySelector('.sort-arrow').textContent = '';
+    
+    if (currentSort === 'solo') {
+      sortSoloBtn.classList.add('active', sortDirection);
+      sortSoloBtn.querySelector('.sort-arrow').textContent = sortDirection === 'desc' ? '▼' : '▲';
+    } else {
+      sortFlexBtn.classList.add('active', sortDirection);
+      sortFlexBtn.querySelector('.sort-arrow').textContent = sortDirection === 'desc' ? '▼' : '▲';
+    }
+  }
   
   function renderLeaderboard(filter = '') {
-    const sorted = sortLoLByRank(LOL_MEMBERS);
+    const sorted = sortMembers(LOL_MEMBERS, currentSort, sortDirection);
     const filtered = filter 
       ? sorted.filter(m => m.name.toLowerCase().includes(filter.toLowerCase()))
       : sorted;
     
     tableBody.innerHTML = filtered.map((member, index) => {
-      const originalRank = sorted.findIndex(m => m.name === member.name) + 1;
-      
       return `
         <tr class="leaderboard-row" data-name="${member.name}" tabindex="0" role="link">
-          <td class="col-rank">${originalRank}</td>
+          <td class="col-rank">${index + 1}</td>
           <td class="col-name">${member.name}</td>
           <td class="col-tier">
             <span class="tier-badge ${getTierClass(member.soloTier)}">${formatLoLRank(member.soloTier, member.soloDivision, member.soloLp)}</span>
@@ -298,6 +361,31 @@ function initLoLPage() {
     });
   }
   
+  // Sort click handlers
+  sortSoloBtn.addEventListener('click', () => {
+    if (currentSort === 'solo') {
+      sortDirection = sortDirection === 'desc' ? 'asc' : 'desc';
+    } else {
+      currentSort = 'solo';
+      sortDirection = 'desc';
+    }
+    updateSortButtons();
+    renderLeaderboard(searchInput.value);
+  });
+  
+  sortFlexBtn.addEventListener('click', () => {
+    if (currentSort === 'flex') {
+      sortDirection = sortDirection === 'desc' ? 'asc' : 'desc';
+    } else {
+      currentSort = 'flex';
+      sortDirection = 'desc';
+    }
+    updateSortButtons();
+    renderLeaderboard(searchInput.value);
+  });
+  
+  // Initial render
+  updateSortButtons();
   renderLeaderboard();
   
   if (searchInput) {

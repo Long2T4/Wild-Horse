@@ -1079,3 +1079,33 @@ button {
     text-align: center;
   }
 }
+
+/* ============================================
+   SORTABLE TABLE HEADERS
+   ============================================ */
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition-fast);
+}
+
+.sortable:hover {
+  background: var(--bg-card-hover);
+}
+
+.sort-arrow {
+  margin-left: var(--space-xs);
+  opacity: 0.5;
+}
+
+.sortable.active .sort-arrow {
+  opacity: 1;
+}
+
+.sortable.asc .sort-arrow::after {
+  content: '▲';
+}
+
+.sortable.desc .sort-arrow::after {
+  content: '▼';
+}
