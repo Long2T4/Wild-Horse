@@ -774,6 +774,21 @@ button {
   transition: all var(--transition-normal);
 }
 
+/* ============================================
+   LOL SCREENSHOTS GRID
+   ============================================ */
+.lol-screenshots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+@media (max-width: 768px) {
+  .lol-screenshots {
+    grid-template-columns: 1fr;
+  }
+}
+
 .stats-screenshot:hover {
   border-color: var(--accent-primary);
 }

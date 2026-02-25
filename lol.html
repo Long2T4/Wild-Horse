@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wild Horses - League of Legends Season 25 Rankings">
+  <title>LoL Season 25 | Wild Horses</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body data-page="lol">
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🐎</span>
+        <span>Wild Horses</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html" class="active">Games</a></li>
+        <li><a href="networking.html">Networking Concepts</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h1 class="section-title">League of Legends</h1>
+        <p class="section-subtitle">Season 25 Rankings</p>
+      </div>
+
+      <!-- Top 5 Snapshot -->
+      <div class="top5-card">
+        <h3>🏆 Top 5 Solo/Duo</h3>
+        <ul class="top5-list" id="top5-lol-list"></ul>
+      </div>
+
+      <!-- Members Grid -->
+      <div class="section-header" style="margin-top: var(--space-2xl);">
+        <h2 class="section-title">All Members</h2>
+        <p class="section-subtitle">Click to view profile</p>
+      </div>
+      <div class="members-grid" id="lol-members-grid"></div>
+
+      <!-- Full Leaderboard Table -->
+      <div class="section-header" style="margin-top: var(--space-2xl);">
+        <h2 class="section-title">Full Rankings</h2>
+        <p class="section-subtitle">Solo/Duo & Flex</p>
+      </div>
+
+      <div class="leaderboard-container">
+        <div class="leaderboard-header">
+          <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search by name..." aria-label="Search players">
+          </div>
+        </div>
+        
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th class="col-rank">#</th>
+              <th class="col-name">Name</th>
+              <th class="col-tier">Solo/Duo</th>
+              <th class="col-tier">Flex</th>
+            </tr>
+          </thead>
+          <tbody id="lol-leaderboard-body"></tbody>
+        </table>
+
+        <div class="leaderboard-legend">
+          <p><strong>Sorted by:</strong> Solo/Duo rank (Tier → Division → LP)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">🐎 Wild Horses</div>
+        <div class="footer-links">
+          <a href="#" target="_blank">GitHub Repo</a>
+          <a href="#" target="_blank">Live Site</a>
+        </div>
+      </div>
+      <p class="footer-copy">© 2024 Wild Horses Gaming Squad. Computer Networking Project. by Long Truong</p>
+    </div>
+  </footer>
+
+  <script src="scripts/data.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

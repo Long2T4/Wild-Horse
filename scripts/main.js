@@ -21,6 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
     case 'networking':
       initNetworkingPage();
       break;
+    case 'lol':
+      initLoLPage();
+      break;
+    case 'lol-member':
+      initLoLMemberPage();
+      break;
   }
   
   // Initialize modal system
@@ -31,50 +37,16 @@ document.addEventListener('DOMContentLoaded', () => {
 // HOME PAGE
 // ============================================
 function initHomePage() {
-  const { MEMBERS, sortByRank, getInitials, formatRank, getTierClass, getTopMembers } = window.WildHorses;
-  
-  // Render Top 5 Snapshot
-  const top5Container = document.getElementById('top5-list');
-  if (top5Container) {
-    const top5 = getTopMembers(5);
-    top5Container.innerHTML = top5.map((member, index) => `
-      <li class="top5-item">
-        <span class="top5-rank">#${index + 1}</span>
-        <span class="top5-name">${member.name}</span>
-        <span class="top5-tier ${getTierClass(member.tier)}">${formatRank(member)}</span>
-      </li>
-    `).join('');
-  }
-  
-  // Render Members Grid
-  const membersGrid = document.getElementById('members-grid');
-  if (membersGrid) {
-    const sorted = sortByRank(MEMBERS);
-    membersGrid.innerHTML = sorted.map(member => `
-      <a href="member.html?name=${encodeURIComponent(member.name)}" class="member-card" tabindex="0">
-        <div class="member-avatar ${getTierClass(member.tier)}">
-          ${getInitials(member.name)}
-        </div>
-        <div class="member-info">
-          <span class="member-name">${member.name}</span>
-          <span class="member-rank ${getTierClass(member.tier)}">${formatRank(member)}</span>
-        </div>
-      </a>
-    `).join('');
-  }
+  // Home page is now just the gallery - no dynamic content needed
 }
 
 // ============================================
 // GAMES PAGE
 // ============================================
 function initGamesPage() {
-  // Games are static for now, just TFT
-  // Could be expanded later
+  // Games are static for now
 }
 
-// ============================================
-// TFT LEADERBOARD PAGE
-// ============================================
 // ============================================
 // TFT LEADERBOARD PAGE
 // ============================================
@@ -139,7 +111,6 @@ function initTFTPage() {
       `;
     }).join('');
     
-    // Add click handlers to rows
     document.querySelectorAll('.leaderboard-row').forEach(row => {
       row.addEventListener('click', () => {
         const name = row.dataset.name;
@@ -155,10 +126,8 @@ function initTFTPage() {
     });
   }
   
-  // Initial render
   renderLeaderboard();
   
-  // Search filter
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       renderLeaderboard(e.target.value);
@@ -190,21 +159,17 @@ function initMemberPage() {
     return;
   }
   
-  // Show profile
   profileContainer.classList.remove('hidden');
   notFoundContainer.classList.add('hidden');
   
-  // Populate data
   document.getElementById('profile-name').textContent = member.name;
   document.getElementById('profile-rank').textContent = formatRank(member);
   document.getElementById('profile-rank').className = `profile-rank ${getTierClass(member.tier)}`;
   
-  // Avatar
   const avatar = document.getElementById('profile-avatar');
   avatar.textContent = getInitials(member.name);
   avatar.className = `profile-avatar ${getTierClass(member.tier)}`;
   
-  // Stats image
   const slug = getSlug(member.name);
   const statsImg = document.getElementById('stats-image');
   const statsNote = document.getElementById('stats-note');
@@ -212,13 +177,11 @@ function initMemberPage() {
   statsImg.src = `assets/stats/${slug}.png`;
   statsImg.alt = `${member.name} TFT Stats`;
   
-  // Handle image load error (fallback to default)
   statsImg.onerror = () => {
     statsImg.src = 'assets/stats/default.png';
     statsNote.classList.remove('hidden');
   };
   
-  // Image click to expand
   const statsContainer = document.querySelector('.stats-screenshot');
   statsContainer.addEventListener('click', () => {
     openModal(statsImg.src, statsImg.alt);
@@ -240,7 +203,6 @@ function initMemberPage() {
 // NETWORKING PAGE
 // ============================================
 function initNetworkingPage() {
-  // Toggle sections
   document.querySelectorAll('.concept-header').forEach(header => {
     header.addEventListener('click', () => {
       const section = header.parentElement;
@@ -255,9 +217,162 @@ function initNetworkingPage() {
     });
   });
   
-  // Expand all by default
   document.querySelectorAll('.concept-section').forEach(section => {
     section.classList.add('expanded');
+  });
+}
+
+// ============================================
+// LOL LEADERBOARD PAGE
+// ============================================
+function initLoLPage() {
+  const { LOL_MEMBERS, sortLoLByRank, getInitials, formatLoLRank, getTierClass, getTopLoLMembers } = window.WildHorses;
+  
+  // Render Top 5
+  const top5Container = document.getElementById('top5-lol-list');
+  if (top5Container) {
+    const top5 = getTopLoLMembers(5);
+    top5Container.innerHTML = top5.map((member, index) => `
+      <li class="top5-item">
+        <span class="top5-rank">#${index + 1}</span>
+        <span class="top5-name">${member.name}</span>
+        <span class="top5-tier ${getTierClass(member.soloTier)}">${formatLoLRank(member.soloTier, member.soloDivision, member.soloLp)}</span>
+      </li>
+    `).join('');
+  }
+  
+  // Render Members Grid
+  const membersGrid = document.getElementById('lol-members-grid');
+  if (membersGrid) {
+    const sorted = sortLoLByRank(LOL_MEMBERS);
+    membersGrid.innerHTML = sorted.map(member => `
+      <a href="lol-member.html?name=${encodeURIComponent(member.name)}" class="member-card" tabindex="0">
+        <div class="member-avatar ${getTierClass(member.soloTier)}">
+          ${getInitials(member.name)}
+        </div>
+        <div class="member-info">
+          <span class="member-name">${member.name}</span>
+          <span class="member-rank ${getTierClass(member.soloTier)}">${formatLoLRank(member.soloTier, member.soloDivision, member.soloLp)}</span>
+        </div>
+      </a>
+    `).join('');
+  }
+  
+  // Render Leaderboard Table
+  const tableBody = document.getElementById('lol-leaderboard-body');
+  const searchInput = document.getElementById('search-input');
+  
+  function renderLeaderboard(filter = '') {
+    const sorted = sortLoLByRank(LOL_MEMBERS);
+    const filtered = filter 
+      ? sorted.filter(m => m.name.toLowerCase().includes(filter.toLowerCase()))
+      : sorted;
+    
+    tableBody.innerHTML = filtered.map((member, index) => {
+      const originalRank = sorted.findIndex(m => m.name === member.name) + 1;
+      
+      return `
+        <tr class="leaderboard-row" data-name="${member.name}" tabindex="0" role="link">
+          <td class="col-rank">${originalRank}</td>
+          <td class="col-name">${member.name}</td>
+          <td class="col-tier">
+            <span class="tier-badge ${getTierClass(member.soloTier)}">${formatLoLRank(member.soloTier, member.soloDivision, member.soloLp)}</span>
+          </td>
+          <td class="col-tier">
+            <span class="tier-badge ${getTierClass(member.flexTier)}">${formatLoLRank(member.flexTier, member.flexDivision, member.flexLp)}</span>
+          </td>
+        </tr>
+      `;
+    }).join('');
+    
+    document.querySelectorAll('.leaderboard-row').forEach(row => {
+      row.addEventListener('click', () => {
+        window.location.href = `lol-member.html?name=${encodeURIComponent(row.dataset.name)}`;
+      });
+      row.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.location.href = `lol-member.html?name=${encodeURIComponent(row.dataset.name)}`;
+        }
+      });
+    });
+  }
+  
+  renderLeaderboard();
+  
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      renderLeaderboard(e.target.value);
+    });
+  }
+}
+
+// ============================================
+// LOL MEMBER PAGE
+// ============================================
+function initLoLMemberPage() {
+  const { findLoLMember, formatLoLRank, getTierClass, getSlug, getInitials } = window.WildHorses;
+  
+  const params = new URLSearchParams(window.location.search);
+  const memberName = params.get('name');
+  
+  const profileContainer = document.getElementById('lol-profile');
+  const notFoundContainer = document.getElementById('lol-not-found');
+  
+  if (!memberName) {
+    profileContainer.classList.add('hidden');
+    notFoundContainer.classList.remove('hidden');
+    return;
+  }
+  
+  const member = findLoLMember(memberName);
+  
+  if (!member) {
+    profileContainer.classList.add('hidden');
+    notFoundContainer.classList.remove('hidden');
+    return;
+  }
+  
+  document.getElementById('profile-name').textContent = member.name;
+  document.getElementById('profile-solo-rank').textContent = 'Solo/Duo: ' + formatLoLRank(member.soloTier, member.soloDivision, member.soloLp);
+  document.getElementById('profile-solo-rank').className = `profile-rank ${getTierClass(member.soloTier)}`;
+  document.getElementById('profile-flex-rank').textContent = 'Flex: ' + formatLoLRank(member.flexTier, member.flexDivision, member.flexLp);
+  document.getElementById('profile-flex-rank').className = `profile-rank ${getTierClass(member.flexTier)}`;
+  
+  const avatar = document.getElementById('profile-avatar');
+  avatar.textContent = getInitials(member.name);
+  avatar.className = `profile-avatar ${getTierClass(member.soloTier)}`;
+  
+  const slug = getSlug(member.name);
+  const statsImg1 = document.getElementById('stats-image-1');
+  const statsImg2 = document.getElementById('stats-image-2');
+  const statsImg3 = document.getElementById('stats-image-3');
+  const statsNote = document.getElementById('stats-note');
+  
+  statsImg1.src = `assets/lol/${slug}-1.png`;
+  statsImg2.src = `assets/lol/${slug}-2.png`;
+  statsImg3.src = `assets/lol/${slug}-3.png`;
+  
+  let missingCount = 0;
+  [statsImg1, statsImg2, statsImg3].forEach(img => {
+    img.onerror = () => {
+      img.src = 'assets/lol/default.png';
+      missingCount++;
+      if (missingCount > 0) statsNote.classList.remove('hidden');
+    };
+  });
+  
+  document.querySelectorAll('.stats-screenshot').forEach(container => {
+    const img = container.querySelector('img');
+    container.addEventListener('click', () => {
+      openModal(img.src, img.alt);
+    });
+    container.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal(img.src, img.alt);
+      }
+    });
   });
 }
 
@@ -270,21 +385,17 @@ function initModal() {
   const modal = document.getElementById('image-modal');
   if (!modal) return;
   
-  const modalImg = document.getElementById('modal-image');
   const closeBtn = document.getElementById('modal-close');
   const overlay = document.querySelector('.modal-overlay');
   
-  // Close on button click
   closeBtn.addEventListener('click', closeModal);
   
-  // Close on overlay click
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) {
       closeModal();
     }
   });
   
-  // Close on ESC
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modalOpen) {
       closeModal();
@@ -303,7 +414,6 @@ function openModal(src, alt) {
   modal.classList.add('active');
   modalOpen = true;
   
-  // Focus trap
   document.getElementById('modal-close').focus();
   document.body.style.overflow = 'hidden';
 }
@@ -317,6 +427,5 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
-// Make modal functions globally available
 window.openModal = openModal;
 window.closeModal = closeModal;
