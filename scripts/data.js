@@ -61,7 +61,7 @@ const LOL_MEMBERS = [
   { name: 'a Tứn', soloTier: 'Platinum', soloDivision: 'III', soloLp: 24, flexTier: 'Gold', flexDivision: 'I', flexLp: 99 },
   { name: 'Hycan', soloTier: 'Emerald', soloDivision: 'IV', soloLp: 74, flexTier: 'Diamond', flexDivision: 'IV', flexLp: 34 },
   { name: 'Kua', soloTier: 'Master', soloDivision: null, soloLp: 97, flexTier: 'Master', flexDivision: null, flexLp: 8 },
-  { name: 'Xệ', soloTier: 'Master', soloDivision: null, soloLp: 53, flexTier: 'Emerald', flexDivision: 'III', flexLp: 32 },
+  { name: 'Xệ', soloTier: 'Challenger', soloDivision: null, soloLp: 2153, flexTier: 'Challenger', flexDivision: 'null', flexLp: 2132 },
   { name: 'Cupid', soloTier: 'Emerald', soloDivision: 'I', soloLp: 40, flexTier: 'Diamond', flexDivision: 'I', flexLp: 33 },
   { name: 'bánh mỳ', soloTier: 'Master', soloDivision: null, soloLp: 423, flexTier: 'Master', flexDivision: null, flexLp: 114 },
   { name: 'Zibi', soloTier: 'Gold', soloDivision: 'III', soloLp: 84, flexTier: 'Gold', flexDivision: 'II', flexLp: 69 },
