@@ -41,7 +41,7 @@ const SLUG_MAP = {
 const MEMBERS = [
   { name: 'Yun', tier: 'Master', division: null, lp: 94 },
   { name: 'Su', tier: 'Master', division: null, lp: 124 },
-  { name: 'Xệ', tier: 'Master', division: null, lp: 0 },
+  { name: 'Xệ', tier: 'Challenger', division: null, lp: 2190 },
   { name: 'Hycan', tier: 'Master', division: null, lp: 0 },
   { name: 'a Tứn', tier: 'Master', division: null, lp: 219 },
   { name: 'Kua', tier: 'Master', division: null, lp: 0 },
