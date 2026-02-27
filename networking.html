@@ -71,7 +71,7 @@ Addresses:  64.29.17.3
           
           <p>Our website is hosted on servers with specific IP addresses. Modern hosting platforms like Vercel and GitHub Pages typically support both IPv4 and IPv6, allowing users on either protocol to access our site.</p>
 
-          <div class="placeholder-box">[PASTE ACTUAL IP ADDRESSES HERE]
+          <div class="placeholder-box">
 
 IPv4 Addresses: 64.29.17.3, 216.198.79.3
 
@@ -95,29 +95,30 @@ Note which protocol(s) your domain resolves to.</div>
 
           <p>Our site is served over HTTPS, which you can verify by the padlock icon in your browser's address bar. This protects any data transmitted and verifies you're connected to the legitimate server.</p>
 
-          <div class="placeholder-box">[PASTE DEVTOOLS NETWORK SCREENSHOT NOTES HERE]
+          <div class="placeholder-box">
 
 Request Details:
 - Request URL: https://wild-horse.vercel.app/index.html
 - Request Method: GET
-- Status Code: 304 Not Modified (page cached, no changes)
+- Status Code: 200 OK
 - Remote Address: 216.198.79.67:443
-- Referrer Policy: strict-origin-when-cross-origin
-
-Port 443 confirms HTTPS connection (HTTP uses port 80).
-
-Status Codes Explained:
-- 200 OK = Page loaded fresh from server
-- 304 Not Modified = Page unchanged, loaded from browser cache
-- Both indicate successful requests
 
 Request Headers (key ones):
-- :scheme: https (encrypted connection)
-- accept: text/html (requesting HTML document)
-- accept-encoding: gzip, deflate, br (compression supported)
+- :scheme: https (confirms encrypted HTTPS connection)
+- :method: GET (requesting a resource)
+- :path: /index.html (the page being requested)
+- accept: text/html (browser expects HTML document)
+- accept-encoding: gzip, deflate, br (compression methods supported)
+- user-agent: Chrome/145.0.0.0 on Windows
 
-HTTPS ensures all data between your browser and Vercel's 
-server is encrypted and secure.
+Response Headers (key ones):
+- content-type: text/html; charset=utf-8 (server returns HTML)
+- content-encoding: br (Brotli compression used)
+- server: Vercel (hosted on Vercel platform)
+- cache-control: public, max-age=0, must-revalidate
+
+Port 443 confirms HTTPS (secure). Port 80 would indicate HTTP (insecure).
+Status 200 OK means the server successfully returned the requested page.
 
 Open DevTools (F12) → Network tab → Refresh page → Click on the main document request to see these headers.</div>
         </div>
@@ -138,30 +139,32 @@ Open DevTools (F12) → Network tab → Refresh page → Click on the main docum
           
           <p><strong>TLS Certificate:</strong> Both Vercel and GitHub Pages provide free SSL/TLS certificates, enabling HTTPS without any configuration.</p>
 
-          <div class="placeholder-box">[PASTE SECURITY EVIDENCE HERE]
+          <div class="placeholder-box">
 
-Security Report (from securityheaders.com):
-- Site: https://wild-horse.vercel.app/
-- IP Address: 216.198.79.67
-- Grade: D
+Security Headers from Response:
 
-Security Headers Present:
-✓ Strict-Transport-Security (HSTS)
-  - Forces browsers to only use HTTPS
-  - Protects against downgrade attacks
+✓ strict-transport-security: max-age=63072000; includeSubDomains; preload
+  - HSTS enabled: Forces browsers to only use HTTPS for 2 years
+  - includeSubDomains: All subdomains also require HTTPS
+  - preload: Site is on browser's HSTS preload list
 
-Security Headers Missing (common for static sites):
-✗ Content-Security-Policy
-✗ X-Frame-Options  
-✗ X-Content-Type-Options
-✗ Referrer-Policy
-✗ Permissions-Policy
+✓ access-control-allow-origin: *
+  - CORS header allowing cross-origin requests
 
-Note: The "D" grade is normal for basic static sites hosted 
-on Vercel. The most important security feature (HTTPS/HSTS) 
-is present, ensuring all traffic is encrypted. The missing 
-headers are optional security enhancements typically configured 
-for more complex web applications.
+✓ x-vercel-cache: HIT
+  - Response served from Vercel's edge cache (faster delivery)
+
+✓ content-encoding: br
+  - Brotli compression reduces file size for faster loading
+
+✓ etag: "da210b09e5f8e1c2213dde6a6027a454"
+  - Enables efficient caching (browser can validate if content changed)
+
+Security Summary:
+- HTTPS enforced via HSTS header
+- TLS/SSL certificate provided by Vercel
+- All traffic encrypted between browser and server
+- Try visiting http://wild-horse.vercel.app → automatically redirects to https://
 
 Paste relevant findings here.</div>
         </div>
