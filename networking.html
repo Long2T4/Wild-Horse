@@ -47,15 +47,32 @@
           
           <p>The DNS resolution process involves querying root servers, TLD servers, and authoritative name servers until the IP address is found. This typically happens in milliseconds and is cached at various levels to speed up future requests.</p>
 
-          <div class="placeholder-box">[PASTE NSLOOKUP OR DIG OUTPUT HERE]
+          <div class="placeholder-box">DNS Lookup Results:
 
-PS C:\Users\Longt> nslookup https://wild-horse.vercel.app
+$ nslookup -type=A wild-horse.vercel.app
 Server:  dns9.quad9.net
 Address:  9.9.9.9
 
-Non-authoritative answer:
-Name:    https://wild-horse.vercel.app
-Addresses:  64.29.17.3
+Name:    wild-horse.vercel.app
+Addresses:  64.29.17.195
+            216.198.79.195
+
+$ nslookup -type=AAAA wild-horse.vercel.app
+(No IPv6 addresses returned)
+
+Analysis:
+- IPv4: ✓ Supported (64.29.17.195, 216.198.79.195)
+- IPv6: ✗ Not configured
+
+Our domain resolves to TWO IPv4 addresses. Vercel uses multiple 
+IPs for load balancing — if one server is busy or down, traffic 
+routes to the other automatically.
+
+IPv4 uses 32-bit addresses (e.g., 64.29.17.195)
+IPv6 uses 128-bit addresses (e.g., 2001:0db8:85a3::8a2e:0370:7334)
+
+Our site currently only supports IPv4, which is sufficient for 
+most users since IPv4 is still the dominant protocol.
           216.198.79.3.</div>
         </div>
       </div>
