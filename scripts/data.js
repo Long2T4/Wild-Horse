@@ -39,7 +39,7 @@ const SLUG_MAP = {
 
 // Member data with exact display names (keep accents)
 const MEMBERS = [
-  { name: 'Yun', tier: 'Master', division: null, lp: 94 },
+  { name: 'Yun', tier: 'Master', division: null, lp: 350 },
   { name: 'Su', tier: 'Master', division: null, lp: 124 },
   { name: 'Xệ', tier: 'Master', division: null, lp: 0 },
   { name: 'Hycan', tier: 'Master', division: null, lp: 0 },
