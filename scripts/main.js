@@ -34,6 +34,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================
+// XSS PROTECTION - Input Sanitization
+// ============================================
+function sanitizeInput(input) {
+  if (!input) return '';
+  
+  // Convert string to text node (escapes HTML automatically)
+  const div = document.createElement('div');
+  div.textContent = input;
+  
+  // Remove dangerous patterns
+  return div.innerHTML
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/javascript:/gi, '')
+    .replace(/on\w+\s*=/gi, '')
+    .trim();
+}
+
+// ============================================
 // HOME PAGE
 // ============================================
 function initHomePage() {
@@ -130,7 +148,8 @@ function initTFTPage() {
   
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
-      renderLeaderboard(e.target.value);
+      const cleanInput = sanitizeInput(e.target.value);
+      renderLeaderboard(cleanInput);
     });
   }
 }
@@ -390,7 +409,8 @@ function initLoLPage() {
   
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
-      renderLeaderboard(e.target.value);
+      const cleanInput = sanitizeInput(e.target.value);
+      renderLeaderboard(cleanInput);
     });
   }
 }
