@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
     case 'lol-member':
       initLoLMemberPage();
       break;
+    case 'pubg':
+      initPUBGPage();
+      break;
   }
   
   // Initialize modal system
@@ -483,6 +486,111 @@ function initLoLMemberPage() {
     });
   });
 }
+
+// ============================================
+// PUBG PAGE
+// ============================================
+function initPUBGPage() {
+  const { PUBG_MEMBERS, sortPUBGByRank, sortPUBGByStat, formatPUBGRank, getPUBGTierClass, getInitials } = window.WildHorses;
+  
+  let currentSort = 'avgKills';
+  
+  // Tab switcher
+  const tabs = document.querySelectorAll('.pubg-tab');
+  const contents = document.querySelectorAll('.pubg-content');
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      contents.forEach(c => c.classList.add('hidden'));
+      document.getElementById(`tab-${target}`).classList.remove('hidden');
+    });
+  });
+  
+  // Render Ranked Grid
+  function renderRankedGrid() {
+    const grid = document.getElementById('pubg-ranked-grid');
+    if (!grid) return;
+    
+    const sorted = sortPUBGByRank(PUBG_MEMBERS);
+    grid.innerHTML = sorted.map(member => `
+      <div class="pubg-rank-card ${getPUBGTierClass(member.rankTier)}" tabindex="0">
+        <div class="pubg-rank-badge">
+          ${getInitials(member.name)}
+        </div>
+        <div class="pubg-rank-name">${member.name}</div>
+        <div class="pubg-rank-tier ${getPUBGTierClass(member.rankTier)}">
+          ${member.rankTier}${member.rankDivision ? ' ' + member.rankDivision : ''}
+        </div>
+        <div class="pubg-rank-rp">${member.rankRP} RP</div>
+        <div class="pubg-season-high">Season High: ${member.rankSeasonHigh}</div>
+      </div>
+    `).join('');
+  }
+  
+  // Render Normal Stats Grid
+  function renderNormalGrid(sortBy = 'avgKills') {
+    const grid = document.getElementById('pubg-normal-grid');
+    if (!grid) return;
+    
+    const sorted = sortPUBGByStat(PUBG_MEMBERS, sortBy);
+    grid.innerHTML = sorted.map((member, index) => {
+      const isHighlight = (stat) => stat === sortBy;
+      
+      return `
+        <div class="pubg-stats-card" tabindex="0">
+          <div class="pubg-stats-header">
+            <div class="pubg-stats-rank-badge">#${index + 1}</div>
+            <div class="pubg-stats-name">${member.name}</div>
+          </div>
+          <div class="pubg-stats-grid">
+            <div class="pubg-stat ${isHighlight('avgKills') ? 'highlight' : ''}">
+              <div class="pubg-stat-value">${member.avgKills}</div>
+              <div class="pubg-stat-label">Avg Kills</div>
+            </div>
+            <div class="pubg-stat ${isHighlight('avgDamage') ? 'highlight' : ''}">
+              <div class="pubg-stat-value">${member.avgDamage}</div>
+              <div class="pubg-stat-label">Avg Damage</div>
+            </div>
+            <div class="pubg-stat ${isHighlight('wins') ? 'highlight' : ''}">
+              <div class="pubg-stat-value">${member.wins}</div>
+              <div class="pubg-stat-label">Wins</div>
+            </div>
+            <div class="pubg-stat ${isHighlight('top10') ? 'highlight' : ''}">
+              <div class="pubg-stat-value">${member.top10}</div>
+              <div class="pubg-stat-label">Top 10</div>
+            </div>
+            <div class="pubg-stat ${isHighlight('matches') ? 'highlight' : ''}">
+              <div class="pubg-stat-value">${member.matches}</div>
+              <div class="pubg-stat-label">Matches</div>
+            </div>
+            <div class="pubg-stat">
+              <div class="pubg-stat-value">${member.avgPlacement}</div>
+              <div class="pubg-stat-label">Avg Place</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+  
+  // Sort buttons
+  document.querySelectorAll('.pubg-sort-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSort = btn.dataset.sort;
+      document.querySelectorAll('.pubg-sort-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderNormalGrid(currentSort);
+    });
+  });
+  
+  // Initial render
+  renderRankedGrid();
+  renderNormalGrid('avgKills');
+}
+
 
 // ============================================
 // MODAL SYSTEM

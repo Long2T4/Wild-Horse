@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wild Horses - PUBG Rankings">
+  <title>PUBG | Wild Horses</title>
+  <link rel="stylesheet" href="styles/main.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6THBJBV6RP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6THBJBV6RP');
+  </script>
+</head>
+<body data-page="pubg">
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🐎</span>
+        <span>Wild Horses</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('active')">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="games.html" class="active">Games</a></li>
+        <li><a href="networking.html">Networking Concepts</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h1 class="section-title">PUBG Battlegrounds</h1>
+        <p class="section-subtitle">Ranked & Normal Mode Stats</p>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="pubg-tabs">
+        <button class="pubg-tab active" data-tab="ranked">🏆 Ranked</button>
+        <button class="pubg-tab" data-tab="normal">⚔️ Normal</button>
+      </div>
+
+      <!-- RANKED TAB -->
+      <div class="pubg-content" id="tab-ranked">
+        <div class="section-header" style="margin-top: var(--space-xl);">
+          <h2 class="section-title">🏆 Highest Ranked Tier</h2>
+          <p class="section-subtitle">Click a member to view their badge</p>
+        </div>
+        <div class="pubg-ranked-grid" id="pubg-ranked-grid"></div>
+      </div>
+
+      <!-- NORMAL TAB -->
+      <div class="pubg-content hidden" id="tab-normal">
+        <div class="section-header" style="margin-top: var(--space-xl);">
+          <h2 class="section-title">⚔️ Season 41 Normal Stats</h2>
+          <p class="section-subtitle">Sort by stat to see who leads</p>
+        </div>
+
+        <!-- Sort Controls -->
+        <div class="pubg-sort-controls">
+          <button class="pubg-sort-btn active" data-sort="avgKills">⚔️ Avg Kills</button>
+          <button class="pubg-sort-btn" data-sort="avgDamage">💥 Avg Damage</button>
+          <button class="pubg-sort-btn" data-sort="wins">🏆 Wins</button>
+          <button class="pubg-sort-btn" data-sort="matches">📊 Matches</button>
+          <button class="pubg-sort-btn" data-sort="top10">🎯 Top 10</button>
+        </div>
+
+        <div class="pubg-normal-grid" id="pubg-normal-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">🐎 Wild Horses</div>
+        <div class="footer-links">
+          <a href="#" target="_blank">GitHub Repo</a>
+          <a href="#" target="_blank">Live Site</a>
+        </div>
+      </div>
+      <p class="footer-copy">© 2024 Wild Horses Gaming Squad. Computer Networking Project. by Long Truong</p>
+    </div>
+  </footer>
+
+  <!-- Image Modal -->
+  <div class="modal" id="image-modal">
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <button class="modal-close" id="modal-close" aria-label="Close modal">×</button>
+        <img id="modal-image" src="" alt="">
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/data.js"></script>
+  <script src="scripts/main.js"></script>
+</body>
+</html>

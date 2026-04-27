@@ -71,6 +71,101 @@ const LOL_MEMBERS = [
   { name: 'Gà', soloTier: 'Platinum', soloDivision: 'IV', soloLp: 35, flexTier: 'Silver', flexDivision: 'II', flexLp: 17 }
 ];
 
+// PUBG Rank Order (highest to lowest)
+const PUBG_TIER_ORDER = [
+  'Survivor',
+  'Master',
+  'Diamond',
+  'Crystal',
+  'Platinum',
+  'Gold',
+  'Silver',
+  'Bronze',
+  'Unranked'
+];
+
+// PUBG divisions use 1-5 (1 best, 5 worst), Master/Survivor have no divisions
+const PUBG_NO_DIVISION_TIERS = ['Survivor', 'Master', 'Unranked'];
+const PUBG_DIVISION_ORDER = ['I', 'II', 'III', 'IV', 'V'];
+
+// PUBG Members Data (Season 41 - Normal Stats + Highest Ranked)
+const PUBG_MEMBERS = [
+  { 
+    name: 'Yun',
+    rankTier: 'Crystal', rankDivision: 'IV', rankRP: 2645, rankSeasonHigh: 'Crystal III (2724 RP)',
+    matches: 88, wins: 17, top10: 47, avgPlacement: 11.8, avgKills: 3.3, avgDamage: 427.4
+  },
+  { 
+    name: 'Xệ',
+    rankTier: 'Crystal', rankDivision: 'I', rankRP: 2941, rankSeasonHigh: 'Crystal III (3133 RP)',
+    matches: 141, wins: 32, top10: 75, avgPlacement: 11.6, avgKills: 2.8, avgDamage: 379
+  },
+  { 
+    name: 'Gà',
+    rankTier: 'Master', rankDivision: null, rankRP: 3681, rankSeasonHigh: 'Master (3755 RP)',
+    matches: 150, wins: 38, top10: 80, avgPlacement: 11.5, avgKills: 4.5, avgDamage: 584.3
+  }
+  // Add more members later
+];
+
+// Format PUBG rank display
+function formatPUBGRank(member) {
+  if (member.rankTier === 'Unranked') return 'Unranked';
+  let rank = member.rankTier;
+  if (member.rankDivision && !PUBG_NO_DIVISION_TIERS.includes(member.rankTier)) {
+    rank += ' ' + member.rankDivision;
+  }
+  rank += ' • ' + member.rankRP + ' RP';
+  return rank;
+}
+
+// Sort PUBG by ranked tier
+function sortPUBGByRank(members) {
+  return [...members].sort((a, b) => {
+    const tierA = PUBG_TIER_ORDER.indexOf(a.rankTier);
+    const tierB = PUBG_TIER_ORDER.indexOf(b.rankTier);
+    if (tierA !== tierB) return tierA - tierB;
+    
+    if (!PUBG_NO_DIVISION_TIERS.includes(a.rankTier)) {
+      const divA = a.rankDivision ? PUBG_DIVISION_ORDER.indexOf(a.rankDivision) : 999;
+      const divB = b.rankDivision ? PUBG_DIVISION_ORDER.indexOf(b.rankDivision) : 999;
+      if (divA !== divB) return divA - divB;
+    }
+    
+    if (a.rankRP !== b.rankRP) return b.rankRP - a.rankRP;
+    return a.name.localeCompare(b.name);
+  });
+}
+
+// Sort PUBG by stat
+function sortPUBGByStat(members, stat) {
+  return [...members].sort((a, b) => {
+    if (a[stat] !== b[stat]) return b[stat] - a[stat];
+    return a.name.localeCompare(b.name);
+  });
+}
+
+// Get PUBG tier color class
+function getPUBGTierClass(tier) {
+  const classes = {
+    'Survivor': 'pubg-survivor',
+    'Master': 'pubg-master',
+    'Diamond': 'pubg-diamond',
+    'Crystal': 'pubg-crystal',
+    'Platinum': 'pubg-platinum',
+    'Gold': 'pubg-gold',
+    'Silver': 'pubg-silver',
+    'Bronze': 'pubg-bronze',
+    'Unranked': 'pubg-unranked'
+  };
+  return classes[tier] || 'pubg-unranked';
+}
+
+// Find PUBG member
+function findPUBGMember(name) {
+  return PUBG_MEMBERS.find(m => m.name === name);
+}
+
 // Format LoL rank display
 function formatLoLRank(tier, division, lp) {
   if (tier === 'Unranked') return 'Unranked';
@@ -193,19 +288,28 @@ function getTopMembers(n) {
 window.WildHorses = {
   MEMBERS,
   LOL_MEMBERS,
+  PUBG_MEMBERS,
   TIER_ORDER,
   DIVISION_ORDER,
   NO_DIVISION_TIERS,
+  PUBG_TIER_ORDER,
+  PUBG_DIVISION_ORDER,
+  PUBG_NO_DIVISION_TIERS,
   SLUG_MAP,
   getSlug,
   getInitials,
   formatRank,
   formatLoLRank,
+  formatPUBGRank,
   sortByRank,
   sortLoLByRank,
+  sortPUBGByRank,
+  sortPUBGByStat,
   getTierClass,
+  getPUBGTierClass,
   findMember,
   findLoLMember,
+  findPUBGMember,
   getTopMembers,
   getTopLoLMembers
 };
