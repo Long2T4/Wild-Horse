@@ -509,13 +509,52 @@ function initPUBGPage() {
     });
   });
   
-  // Render Ranked Grid
+  // Render Ranked Grid (Podium + Other Members)
   function renderRankedGrid() {
+    const podium = document.getElementById('pubg-podium');
     const grid = document.getElementById('pubg-ranked-grid');
-    if (!grid) return;
+    if (!grid || !podium) return;
     
     const sorted = sortPUBGByRank(PUBG_MEMBERS);
-    grid.innerHTML = sorted.map(member => {
+    const top3 = sorted.slice(0, 3);
+    const rest = sorted.slice(3);
+    
+    // Build podium order: 2nd place left, 1st middle, 3rd right
+    const podiumOrder = [];
+    if (top3[1]) podiumOrder.push({ member: top3[1], place: 2, className: 'second' });
+    if (top3[0]) podiumOrder.push({ member: top3[0], place: 1, className: 'first' });
+    if (top3[2]) podiumOrder.push({ member: top3[2], place: 3, className: 'third' });
+    
+    // Render podium
+    podium.innerHTML = podiumOrder.map(({ member, place, className }) => {
+      const tierSlug = member.rankTier.toLowerCase();
+      const hasLink = member.profileUrl && member.profileUrl.length > 0;
+      const Tag = hasLink ? 'a' : 'div';
+      const linkAttrs = hasLink 
+        ? `href="${member.profileUrl}" target="_blank" rel="noopener noreferrer"` 
+        : '';
+      
+      return `
+        <${Tag} class="podium-card ${className} ${getPUBGTierClass(member.rankTier)}" ${linkAttrs}>
+          ${place === 1 ? '<div class="podium-crown">👑</div>' : ''}
+          <div class="podium-place">#${place}</div>
+          <div class="podium-badge">
+            <img src="assets/pubg/badges/${tierSlug}.png" alt="${member.rankTier}"
+                 onerror="this.style.display='none';">
+          </div>
+          <div class="podium-name">${member.name}</div>
+          <div class="podium-tier ${getPUBGTierClass(member.rankTier)}">
+            ${member.rankTier}${member.rankDivision ? ' ' + member.rankDivision : ''}
+          </div>
+          <div class="podium-rp">${member.rankRP} RP</div>
+          <div class="podium-season-high">Season High: ${member.rankSeasonHigh}</div>
+          ${hasLink ? '<div class="podium-link-hint">🔗 View Profile</div>' : ''}
+        </${Tag}>
+      `;
+    }).join('');
+    
+    // Render rest of members below
+    grid.innerHTML = rest.map((member) => {
       const tierSlug = member.rankTier.toLowerCase();
       const hasLink = member.profileUrl && member.profileUrl.length > 0;
       const Tag = hasLink ? 'a' : 'div';
@@ -527,7 +566,7 @@ function initPUBGPage() {
         <${Tag} class="pubg-rank-card ${getPUBGTierClass(member.rankTier)}" ${linkAttrs} tabindex="0">
           <div class="pubg-rank-badge">
             <img src="assets/pubg/badges/${tierSlug}.png" alt="${member.rankTier} badge" 
-                 onerror="this.style.display='none'; this.parentElement.classList.add('no-image'); this.parentElement.textContent='${getInitials(member.name)}';">
+                 onerror="this.style.display='none';">
           </div>
           <div class="pubg-rank-name">${member.name}</div>
           <div class="pubg-rank-tier ${getPUBGTierClass(member.rankTier)}">
@@ -541,7 +580,7 @@ function initPUBGPage() {
     }).join('');
   }
   
-  // Render Normal Stats Grid
+  // Render Normal Stats Grid (Trading Card style)
   function renderNormalGrid(sortBy = 'avgKills') {
     const grid = document.getElementById('pubg-normal-grid');
     if (!grid) return;
@@ -549,11 +588,12 @@ function initPUBGPage() {
     const sorted = sortPUBGByStat(PUBG_MEMBERS, sortBy);
     grid.innerHTML = sorted.map((member, index) => {
       const isHighlight = (stat) => stat === sortBy;
+      const place = index + 1;
       
       return `
-        <div class="pubg-stats-card" tabindex="0">
+        <div class="pubg-stats-card" data-place="${place}" tabindex="0">
           <div class="pubg-stats-header">
-            <div class="pubg-stats-rank-badge">#${index + 1}</div>
+            <div class="pubg-stats-rank-badge">#${place}</div>
             <div class="pubg-stats-name">${member.name}</div>
           </div>
           <div class="pubg-stats-grid">
@@ -601,7 +641,6 @@ function initPUBGPage() {
   renderRankedGrid();
   renderNormalGrid('avgKills');
 }
-
 
 // ============================================
 // MODAL SYSTEM
