@@ -512,6 +512,7 @@ function initPUBGPage() {
   // Render Ranked Grid
   // Render Ranked Grid
 // Render Ranked Grid
+// Render Ranked Grid
 function renderRankedGrid() {
   const grid = document.getElementById('pubg-ranked-grid');
   if (!grid) return;
@@ -519,8 +520,14 @@ function renderRankedGrid() {
   const sorted = sortPUBGByRank(PUBG_MEMBERS);
   grid.innerHTML = sorted.map(member => {
     const tierSlug = member.rankTier.toLowerCase();
+    const hasLink = member.profileUrl && member.profileUrl.length > 0;
+    const Tag = hasLink ? 'a' : 'div';
+    const linkAttrs = hasLink 
+      ? `href="${member.profileUrl}" target="_blank" rel="noopener noreferrer"` 
+      : '';
+    
     return `
-      <div class="pubg-rank-card ${getPUBGTierClass(member.rankTier)}" tabindex="0">
+      <${Tag} class="pubg-rank-card ${getPUBGTierClass(member.rankTier)}" ${linkAttrs} tabindex="0">
         <div class="pubg-rank-badge">
           <img src="assets/pubg/badges/${tierSlug}.png" alt="${member.rankTier} badge" 
                onerror="this.style.display='none'; this.parentElement.classList.add('no-image'); this.parentElement.textContent='${getInitials(member.name)}';">
@@ -531,7 +538,8 @@ function renderRankedGrid() {
         </div>
         <div class="pubg-rank-rp">${member.rankRP} RP</div>
         <div class="pubg-season-high">Season High: ${member.rankSeasonHigh}</div>
-      </div>
+        ${hasLink ? '<div class="pubg-link-hint">🔗 View Profile</div>' : ''}
+      </${Tag}>
     `;
   }).join('');
 }
