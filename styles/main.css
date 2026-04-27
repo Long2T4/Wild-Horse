@@ -1418,17 +1418,37 @@ body {
 }
 
 .pubg-rank-badge {
-  width: 100px;
-  height: 100px;
+  width: 140px;
+  height: 140px;
   margin: 0 auto var(--space-md);
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  position: relative;
+}
+
+.pubg-rank-badge img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px currentColor);
+  transition: transform var(--transition-normal);
+}
+
+.pubg-rank-card:hover .pubg-rank-badge img {
+  transform: scale(1.1);
+}
+
+.pubg-rank-badge.no-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
   border: 3px solid currentColor;
   box-shadow: 0 0 30px currentColor;
+  font-size: 2rem;
+  font-weight: 800;
+  color: currentColor;
 }
 
 .pubg-rank-name {
@@ -1554,15 +1574,15 @@ body {
 }
 
 /* PUBG Tier Colors */
-.pubg-survivor { color: #ff4757; }
-.pubg-master { color: #2ecc71; }
-.pubg-diamond { color: #5dade2; }
-.pubg-crystal { color: #a569bd; }
-.pubg-platinum { color: #1abc9c; }
-.pubg-gold { color: #f1c40f; }
-.pubg-silver { color: #95a5a6; }
-.pubg-bronze { color: #cd6133; }
-.pubg-unranked { color: #555566; }
+.pubg-survivor { color: #e74c3c; }   /* Red */
+.pubg-master { color: #d4a017; }     /* Gold */
+.pubg-diamond { color: #5dade2; }    /* Blue */
+.pubg-crystal { color: #a569bd; }    /* Purple */
+.pubg-platinum { color: #16a085; }   /* Teal */
+.pubg-gold { color: #f1c40f; }       /* Yellow Gold */
+.pubg-silver { color: #bdc3c7; }     /* Light Silver */
+.pubg-bronze { color: #cd7f32; }     /* Bronze */
+.pubg-unranked { color: #555566; }   /* Gray */
 
 @media (max-width: 600px) {
   .pubg-stats-grid {

@@ -93,12 +93,12 @@ const PUBG_MEMBERS = [
   { 
     name: 'Yun',
     rankTier: 'Crystal', rankDivision: 'IV', rankRP: 2645, rankSeasonHigh: 'Crystal III (2724 RP)',
-    matches: 88, wins: 17, top10: 47, avgPlacement: 11.8, avgKills: 3.3, avgDamage: 427.4
+    matches: 141, wins: 32, top10: 75, avgPlacement: 11.6, avgKills: 2.8, avgDamage: 379
   },
   { 
     name: 'Xệ',
     rankTier: 'Crystal', rankDivision: 'I', rankRP: 2941, rankSeasonHigh: 'Crystal III (3133 RP)',
-    matches: 141, wins: 32, top10: 75, avgPlacement: 11.6, avgKills: 2.8, avgDamage: 379
+    matches: 88, wins: 17, top10: 47, avgPlacement: 11.8, avgKills: 3.3, avgDamage: 427.4
   },
   { 
     name: 'Gà',

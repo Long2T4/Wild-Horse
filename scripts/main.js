@@ -510,15 +510,20 @@ function initPUBGPage() {
   });
   
   // Render Ranked Grid
-  function renderRankedGrid() {
-    const grid = document.getElementById('pubg-ranked-grid');
-    if (!grid) return;
-    
-    const sorted = sortPUBGByRank(PUBG_MEMBERS);
-    grid.innerHTML = sorted.map(member => `
+  // Render Ranked Grid
+// Render Ranked Grid
+function renderRankedGrid() {
+  const grid = document.getElementById('pubg-ranked-grid');
+  if (!grid) return;
+  
+  const sorted = sortPUBGByRank(PUBG_MEMBERS);
+  grid.innerHTML = sorted.map(member => {
+    const tierSlug = member.rankTier.toLowerCase();
+    return `
       <div class="pubg-rank-card ${getPUBGTierClass(member.rankTier)}" tabindex="0">
         <div class="pubg-rank-badge">
-          ${getInitials(member.name)}
+          <img src="assets/pubg/badges/${tierSlug}.png" alt="${member.rankTier} badge" 
+               onerror="this.style.display='none'; this.parentElement.classList.add('no-image'); this.parentElement.textContent='${getInitials(member.name)}';">
         </div>
         <div class="pubg-rank-name">${member.name}</div>
         <div class="pubg-rank-tier ${getPUBGTierClass(member.rankTier)}">
@@ -527,8 +532,9 @@ function initPUBGPage() {
         <div class="pubg-rank-rp">${member.rankRP} RP</div>
         <div class="pubg-season-high">Season High: ${member.rankSeasonHigh}</div>
       </div>
-    `).join('');
-  }
+    `;
+  }).join('');
+}
   
   // Render Normal Stats Grid
   function renderNormalGrid(sortBy = 'avgKills') {
